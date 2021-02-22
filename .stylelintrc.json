@@ -1,0 +1,13 @@
+{
+  "extends": "stylelint-config-recommended",
+  "plugins": [
+    "stylelint-csstree-validator",
+    "stylelint-high-performance-animation",
+    "stylelint-value-no-unknown-custom-properties"
+  ],
+  "rules": {
+    "csstree/validator": true,
+    "plugin/no-low-performance-animation-properties": true,
+    "csstools/value-no-unknown-custom-properties": true
+  }
+}

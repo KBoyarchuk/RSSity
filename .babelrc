@@ -1,0 +1,4 @@
+{
+  "plugins": ["date-fns"],
+  "presets": ["@babel/preset-env"]
+}
