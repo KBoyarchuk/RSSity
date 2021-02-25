@@ -1,0 +1,18 @@
+{
+    "extensionName": {
+      "message": "RSSity Feeds",
+      "description": "Name of the extension."
+    },
+    "extensionDescription": {
+      "message": "Multi browser open-source extension overview of your RSS and Atom feeds.",
+      "description": "Description of the extension."
+    },
+    "extensionShortName": {
+      "message": "RSSity",
+      "description": "Short name of the extension."
+    },
+    "extensionTitle": {
+      "message": "RSSity",
+      "description": "Title of the extension."
+    }
+  }
