@@ -1,32 +1,25 @@
 const path = require("path");
 const glob = require("glob-all");
 const { merge } = require("webpack-merge");
-const common = require("./webpack.common.js");
+const common = require("./webpack.common.cjs");
 
-const PATHS = {
-  src: path.join(__dirname, "src"),
-};
+const rootPath = path.resolve(__dirname, "../src");
+const extensionPath = path.join(rootPath, "src");
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-const SizePlugin = require("size-plugin");
+
+const isAnalyze = process.env.BUNDLE_ANALYZE;
 
 module.exports = merge(common, {
   mode: "production",
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css",
-    }),
     new PurgecssPlugin({
-      paths: () => glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
-    }),
-    new SizePlugin(),
-    new BundleAnalyzerPlugin({
-      analyzerMode: "static",
-      reportFilename: "productionBundleReport.html",
+      paths: () => glob.sync(`${extensionPath}/**/*`, { nodir: true }),
+      only: ["popup", "options", "content"],
     }),
   ],
   module: {
@@ -38,6 +31,7 @@ module.exports = merge(common, {
     ],
   },
   optimization: {
+    minimize: true,
     minimizer: [
       new CssMinimizerPlugin({
         parallel: true,
@@ -50,6 +44,21 @@ module.exports = merge(common, {
           ],
         },
       }),
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+          mangle: false,
+          module: true,
+          ecma: 2018,
+        },
+        extractComments: false,
+      }),
     ],
   },
 });
+
+if (isAnalyze) {
+  module.exports.plugins.push(new BundleAnalyzerPlugin());
+}

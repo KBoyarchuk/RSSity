@@ -8,6 +8,7 @@
   "rules": {
     "csstree/validator": true,
     "plugin/no-low-performance-animation-properties": true,
+    "stylelint-value-no-unknown-custom-properties": true,
     "csstools/value-no-unknown-custom-properties": true
   }
 }
