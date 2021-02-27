@@ -42,7 +42,8 @@
     "ext:zip": "rm -rf web-ext-artifacts/* && web-ext --config=./config/web-ext-config.cjs build",
     "ext:lint": "web-ext lint --config=./config/web-ext-config.cjs",
     "bundle:analyze": "BUNDLE_ANALYZE=true rm -rf stats.json && run-s build:chrome",
-    "prepare": "git config --local core.hooksPath .githook"
+    "prepare": "git config --local core.hooksPath .githook",
+    "test": "run-s build:chrome"
   },
   "license": "MIT",
   "devDependencies": {
