@@ -1,2 +1,3 @@
 #!/bin/sh
+console.log("COMMIT");
 lint-staged
