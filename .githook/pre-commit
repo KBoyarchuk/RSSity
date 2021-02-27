@@ -1,3 +1,2 @@
 #!/bin/sh
-console.log("COMMIT");
-lint-staged
+npx --no-install lint-staged
