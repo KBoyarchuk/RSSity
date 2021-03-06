@@ -12,7 +12,7 @@ const queryTabs = async (queryInfo: Tabs.QueryQueryInfoType = {}) => {
   }
 };
 
-const onUpdatedHandler = () => {};
+// const onUpdatedHandler = () => {};
 
 browser.tabs.onUpdated.addListener();
 
