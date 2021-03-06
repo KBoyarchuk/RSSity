@@ -7,18 +7,17 @@ const environment = new Env();
 
 module.exports = {
   verbose: true,
-  artifactsDir: "./web-ext-artifacts/",
   sourceDir: `./extension/`,
-  ignoreFiles: ["./webextension-polyfill.js"],
+  ignoreFiles: ["runtime.js"],
   build: {
     overwriteDest: true,
     asNeeded: false,
   },
   run: {
     browserConsole: true,
-    firefox: "firefoxdeveloperedition",
+    firefox: "firefox",
   },
   lint: {
-    output: "text"
+    output: "text",
   },
 };

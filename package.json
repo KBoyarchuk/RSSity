@@ -31,17 +31,21 @@
     "url": "https://github.com/KBoyarchuk/RSSity.git"
   },
   "scripts": {
-    "build:chrome": "run-s prod:chrome ext:lint ext:zip",
-    "build:firefox": "run-s prod:firefox ext:lint ext:zip",
-    "dev:chrome": "TARGET_BROWSER=chrome webpack --config webpack/webpack.dev.cjs --watch",
-    "dev:firefox": "TARGET_BROWSER=firefox webpack --config webpack/webpack.dev.cjs --watch",
-    "prod:chrome": "TARGET_BROWSER=chrome webpack --config webpack/webpack.prod.cjs",
-    "prod:firefox": "TARGET_BROWSER=firefox webpack --config webpack/webpack.prod.cjs",
-    "start:chrome": "web-ext --config=./config/web-ext-config.cjs run --target chromium",
-    "start:firefox": "web-ext --config=./config/web-ext-config.cjs run --target firefox-desktop",
-    "ext:zip": "rm -rf web-ext-artifacts/* && web-ext --config=./config/web-ext-config.cjs build",
+    "clean": "npm-run-all clean:*",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "run-s lint -- --fix",
+    "clean:artifacts": "rm -rf content.js && rm -rf web-ext-artifacts && rm -rf extension && rm -rf stats.json",
+    "clean:package": "rm -rf node_modules && rm -rf package-lock.json",
+    "build:chrome": "webpack --config webpack/webpack.content.cjs --mode='production' && TARGET_BROWSER=chrome webpack --config webpack/webpack.prod.cjs",
+    "build:firefox": "webpack --config webpack/webpack.content.cjs --mode='production' && TARGET_BROWSER=firefox webpack --config webpack/webpack.prod.cjs",
+    "dev:chrome": "webpack --config webpack/webpack.content.cjs --mode='development' && TARGET_BROWSER=chrome webpack --config webpack/webpack.dev.cjs",
+    "dev:firefox": "webpack --config webpack/webpack.content.cjs --mode='development' TARGET_BROWSER=firefox webpack --config webpack/webpack.dev.cjs",
+    "web-ext:build": "web-ext --config=./config/web-ext-config.cjs build",
     "ext:lint": "web-ext lint --config=./config/web-ext-config.cjs",
-    "bundle:analyze": "BUNDLE_ANALYZE=true rm -rf stats.json && run-s build:chrome"
+    "chrome:zip": "run-s clean:artifacts build:chrome web-ext:build",
+    "firefox:zip": "run-s clean:artifacts build:firefox ext:lint web-ext:build",
+    "web-ext:run": "web-ext --config=./config/web-ext-config.cjs run --target chromium --target firefox-desktop",
+    "bundle:analyze": "BUNDLE_ANALYZE=true run-s clean:artifacts build:chrome"
   },
   "license": "MIT",
   "devDependencies": {

@@ -19,10 +19,6 @@ module.exports = {
       import: path.resolve(extensionPath, "background", "background.ts"),
       dependOn: "webextension-polyfill",
     },
-    "content": {
-      import: path.resolve(extensionPath, "content", "content.ts"),
-      dependOn: "webextension-polyfill",
-    },
     "popup": {
       import: path.resolve(extensionPath, "popup", "popup.ts"),
       dependOn: "webextension-polyfill",
@@ -43,7 +39,7 @@ module.exports = {
       module: true,
     },
     filename: "[name].js",
-    path: path.resolve(__dirname, `${rootPath}/extension/`)
+    path: path.resolve(__dirname, `${rootPath}/extension/`),
   },
   resolve: {
     modules: [path.resolve(__dirname, "..", "src/"), "node_modules"],
@@ -103,7 +99,7 @@ module.exports = {
           },
         ],
         exclude: /(node_modules)/,
-        include: [path.resolve(__dirname, "../", "src/")]
+        include: [path.resolve(__dirname, "../", "src/")],
       },
     ],
   },
@@ -139,9 +135,11 @@ module.exports = {
       events: {
         onEnd: {
           copy: [
-            { source: "src/assets", destination: `extension/` },
-            { source: "src/_locales", destination: `extension/_locales` },
+            { source: "src/assets", destination: "extension/" },
+            { source: "src/_locales", destination: "extension/_locales" },
+            { source: "content.js", destination: "extension/" },
           ],
+          delete: ["content.js"],
         },
       },
     }),

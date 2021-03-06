@@ -1,21 +1,19 @@
-import { browser } from "webextension-polyfill-ts";
+import { browser, Tabs } from "webextension-polyfill-ts";
+import { nanoid } from "nanoid";
 
-async function reloadTabs() {
+const tabsMap = new Map<string, Tabs.Tab>();
+
+const queryTabs = async (queryInfo: Tabs.QueryQueryInfoType = {}) => {
   try {
-    const tabs = await browser.tabs.query({
-      url: "https://www.wikipedia.org/",
-    });
-    await Promise.all([...tabs].map((tab) => browser.tabs.reload(tab.id)));
-  } catch (error) {
-    console.error(`An error occurred while reloading tbs: ${error.message}`);
+    const tabs = await browser.tabs.query(queryInfo);
+    return tabs;
+  } catch {
+    return;
   }
-}
+};
 
-reloadTabs()
-  .then(async () => {
-    const { User } = await import("@/background/bg");
-    const user = new User("Kostya");
-    console.log(user.greet());
-    return user.greet();
-  })
-  .catch((error) => console.error(error));
+const onUpdatedHandler = () => {};
+
+browser.tabs.onUpdated.addListener();
+
+browser.runtime.onInstalled.addListener();
