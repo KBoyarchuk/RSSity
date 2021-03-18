@@ -6,13 +6,6 @@ type RequestIdleCallbackDeadline = {
   readonly didTimeout: boolean;
   timeRemaining: () => number;
 };
-
-export type ScheduleCallback = () => void;
-export interface IIdleValue {
-  getValue(): unknown;
-  setValue(newValue: unknown): void;
-}
-
 declare global {
   interface Window {
     requestIdleCallback: (
@@ -21,6 +14,12 @@ declare global {
     ) => RequestIdleCallbackHandle;
     cancelIdleCallback: (handle: RequestIdleCallbackHandle) => void;
   }
+}
+
+export type ScheduleCallback = () => void;
+export interface IIdleValue {
+  getValue(): unknown;
+  setValue(newValue: unknown): void;
 }
 
 export class IdleValue implements IIdleValue {
