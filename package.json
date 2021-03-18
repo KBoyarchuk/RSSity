@@ -45,7 +45,8 @@
     "chrome:zip": "run-s clean:artifacts build:chrome web-ext:build",
     "firefox:zip": "run-s clean:artifacts build:firefox ext:lint web-ext:build",
     "web-ext:run": "web-ext --config=./config/web-ext-config.cjs run --target chromium --target firefox-desktop",
-    "bundle:analyze": "BUNDLE_ANALYZE=true run-s clean:artifacts build:chrome"
+    "bundle:analyze": "BUNDLE_ANALYZE=true run-s clean:artifacts build:chrome",
+    "test": ""
   },
   "license": "MIT",
   "devDependencies": {
